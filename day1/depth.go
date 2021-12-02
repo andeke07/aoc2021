@@ -29,6 +29,28 @@ func readLinesToIntArray(path string) ([]int, error) {
 	return lines, scanner.Err()
 }
 
+func sum(a, b, c int) (sum int) {
+	return a + b + c
+}
+
+func single_measurements(lines []int) (count int) {
+	for i := 1; i < len(lines); i++ {
+		if lines[i] > lines[i-1] {
+			count++
+		}
+	}
+	return count
+}
+
+func three_measurements(lines []int) (count int) {
+	for i := 3; i < len(lines); i++ {
+		if sum(lines[i], lines[i-1], lines[i-2]) > sum(lines[i-1], lines[i-2], lines[i-3]) {
+			count++
+		}
+	}
+	return count
+}
+
 func main() {
 	if len(os.Args) <= 1 {
 		fmt.Printf("USAGE : %s <target_filename> \n", os.Args[0])
@@ -42,14 +64,10 @@ func main() {
 		log.Fatalf("readLines: %s", err)
 	}
 
-	count := 0
+	problem_one := single_measurements(lines)
+	fmt.Printf("Problem 1 count: %v\n", problem_one)
 
-	for i := 1; i < len(lines); i++ {
-		if lines[i] > lines[i-1] {
-			count++
-			fmt.Printf("i: %v, depth: %v, depth-1: %v, count: %v\n", i, lines[i], lines[i-1], count)
-		}
-	}
+	problem_two := three_measurements(lines)
+	fmt.Printf("Problem 2 count: %v\n", problem_two)
 
-	fmt.Printf("Count: %v", count)
 }
