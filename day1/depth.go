@@ -29,8 +29,11 @@ func readLinesToIntArray(path string) ([]int, error) {
 	return lines, scanner.Err()
 }
 
-func sum(a, b, c int) (sum int) {
-	return a + b + c
+func sum(nums ...int) (sum int) {
+	for _, num := range nums {
+		sum += num
+	}
+	return
 }
 
 func single_measurements(lines []int) (count int) {
